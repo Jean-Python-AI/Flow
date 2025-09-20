@@ -97,3 +97,5 @@
 
 -- Make a liste of what's where I'm?:
     ls
+
+-- Clean the terminal

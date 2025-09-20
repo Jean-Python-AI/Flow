@@ -13,6 +13,23 @@ import { TextStyles } from '../../../../styles/Text';
 export default function HeaderEdit({date} : {date:string}) {
     // Navigation
     const navigation = useNavigation<any>();
+    
+    // Formater la date pour l'affichage
+    const formatDate = (dateString: string) => {
+        if (!dateString) return 'Date inconnue';
+        
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+            });
+        } catch (error) {
+            console.log('Error formatting date:', error);
+            return dateString; // Retourner la date brute si le formatage échoue
+        }
+    };
 
     // RETURN THE COMPONENT ------------------------------------------------------
     return(
@@ -29,7 +46,7 @@ export default function HeaderEdit({date} : {date:string}) {
             </Pressable>
 
             {/* Date of Creation */}
-            <Text style={[TextStyles.subText, TextStyles.medium]}>{date}</Text>
+            <Text style={[TextStyles.subText, TextStyles.medium]}>{formatDate(date)}</Text>
 
 
             {/* Paramettres */}

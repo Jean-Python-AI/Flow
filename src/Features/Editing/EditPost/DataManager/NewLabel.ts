@@ -1,4 +1,4 @@
-import db from '../dataBase';
+import db from '../../../../DataBase/dataBase';
 import { Alert } from 'react-native';
 
 export const NewLabel = (name:string, color:string, callback?: () => void) => {

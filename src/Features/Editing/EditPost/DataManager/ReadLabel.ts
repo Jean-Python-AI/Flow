@@ -1,4 +1,4 @@
-import db from '../dataBase';
+import db from '../../../../DataBase/dataBase';
 
 export const ReadAllLabels = (callback: (rows: {id: number, name: string, color: string}[]) => void) => {
   db.transaction(tx => {

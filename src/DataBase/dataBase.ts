@@ -45,7 +45,9 @@ export const createTables = (): void => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         parentId INTEGER,
         title TEXT NOT NULL,
-        text TEXT
+        text TEXT,
+        date TEXT DEFAULT (datetime('now', 'localtime'))
+        colors TEXT
       );`,
       [],
       () => console.log('SQLite : table 3 => OK'),
@@ -63,11 +65,34 @@ export const createTables = (): void => {
       () => console.log('SQLite : table 4 => OK'),
       (_, error) => { console.log('Error creation table 4: ', error); return false; }
     );
+    
+    // Table 5) Post Labels -----------------------------------------    
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS post_labels (
+        postId INTEGER,
+        labelId INTEGER,
+        PRIMARY KEY (postId, labelId),
+        FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE,
+        FOREIGN KEY (labelId) REFERENCES labels(id) ON DELETE CASCADE
+      );`,
+      [],
+      () => console.log('SQLite : table 4 => OK'),
+      (_, error) => { console.log('Error creation table 4: ', error); return false; }
+    );
 
     // Nettoyer les données orphelines après création des tables
     console.log('SQLite : Nettoyage des données orphelines...');
     CleanCategory();
     CleanPosts();
+    
+    // Mettre à jour les posts existants qui n'ont pas de date
+    console.log('SQLite : Mise à jour des dates manquantes...');
+    tx.executeSql(
+      "UPDATE posts SET date = datetime('now', 'localtime') WHERE date IS NULL OR date = '';",
+      [],
+      () => console.log('SQLite : Dates mises à jour'),
+      (_, error) => { console.log('Error updating dates: ', error); return false; }
+    );
   });
 };
 

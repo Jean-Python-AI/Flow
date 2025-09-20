@@ -14,6 +14,16 @@ export const PopInStyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0)', 
     },
+    Background_Bottom : {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0)', 
+    },
     DeleteProject : {
         position: 'absolute',
         justifyContent: 'center',
@@ -39,5 +49,16 @@ export const PopInStyles = StyleSheet.create({
         gap:40,
         borderRadius: 20,
         backgroundColor: Colors.Background_Elements,
+    },
+    Bottom: {
+        width:'100%',
+        padding:20,
+        paddingBottom:0,
+        backgroundColor:Colors.Background_Primary,
+        borderWidth:1,
+        borderBottomWidth:0,
+        borderColor:Colors.Button,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
     }
 });

@@ -1,6 +1,6 @@
 // IMPORTS ====================================================================
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, Pressable, TextInput, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Pressable, TextInput, ScrollView, Alert } from 'react-native';
 // Navigation ------------------------------------------------------------
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../../../App';
@@ -11,6 +11,7 @@ import { TextStyles } from '../../../styles/Text';
 // Import Components -----------------------------------------------------
 import HeaderEdit from './Components/Header';
 import EditPostsBarr from './Components/EditPostBarr';
+import PopInLabels from './Components/PopInLabels';
 // Import Data -----------------------------------------------------------
 import { ReadPostById } from './DataManager/ReadPost';
 import { ModifyPost } from './DataManager/ModifyPost';
@@ -29,12 +30,17 @@ function EditPosts() {
     // Post States ----------------------------------------------------
     const [postTitle, setPostTitle] = useState(title);
     const [postText, setPostText] = useState('');
+    const [postDate, setPostDate] = useState('')
+    // PopIn state ---------------------------------------------------
+    const [labelsVisible, setLabelsVisible] = useState(false);
+
     // Load the post data if the ID alredy exists --------------------
     useEffect(() => {
         if (id) {
             ReadPostById(id, (postData) => {
                  setPostTitle(postData.title);
                  setPostText(postData.text);
+                 setPostDate(postData.date)
             });
         }
     }, [id]);
@@ -52,10 +58,10 @@ function EditPosts() {
     return(
         <View style={Screens.editPost}>
             {/* Phone Barr style */}
-            <StatusBar barStyle='dark-content' backgroundColor={Colors.Background_Secondary}/>
+            <StatusBar backgroundColor={Colors.Background_Secondary}/>
 
             {/* Header */}
-            <HeaderEdit date={'14/09/25'}/>
+            <HeaderEdit date={postDate}/>
 
             <View style={Screens.editPost_TextZone}>
                  <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={true}>
@@ -99,8 +105,11 @@ function EditPosts() {
                 </ScrollView>
 
                 {/* Labels Barr */}
-                <EditPostsBarr/>
+                <EditPostsBarr onOpenLabels={() => setLabelsVisible(true)} />
             </View>
+
+            {/* PopIn placed at screen level to avoid clipping */}
+            <PopInLabels idPost={id} visible={labelsVisible} onClose={() => {setLabelsVisible(false)}} />
 
         </View>
     )

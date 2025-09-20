@@ -49,7 +49,7 @@ function projectsView() {
             <ScrollView style={Screens.scroll}>
 
                 {/* Title of elements ---------------*/}
-                <Text style={[TextStyles.subText, TextStyles.SubTitle, TextStyles.bold]}>Projects</Text>
+                <Text style={[TextStyles.subText, TextStyles.SubTitle, TextStyles.bold, {marginBottom:10}]}>Projects</Text>
 
 
                 {/* List of Projects ----------------*/}

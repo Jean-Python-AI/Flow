@@ -8,8 +8,9 @@ export const Colors = {
 
   Button: '#CFCFCF',
 
-  Red: '#b1251eff',  
+  Red: '#b61810ff',  
   Red_Background: '#d10a00ff',
+  Red_Background_opacity: '#d10a0016',
 
   text: '#1a1a1aff',
   Text_Secondary: '#969696',

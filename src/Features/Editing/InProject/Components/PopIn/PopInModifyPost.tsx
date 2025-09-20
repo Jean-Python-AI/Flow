@@ -1,40 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Modal, Pressable, View, Text, Animated, Easing, Image, ScrollView } from 'react-native';
+import { Modal, Pressable, View, Text, Animated, Easing, Image } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
+import { PopInStyles } from '../../../../../styles/PopIn';
+import { TextStyles } from '../../../../../styles/Text';
+import { ViewsStyles } from '../../../../../styles/Views';
+import { ButtonStyles } from '../../../../../styles/Button';
 // Styles -----------------------------------------------
-import { Colors } from '../../../../styles/theme';
-import { PopInStyles } from '../../../../styles/PopIn';
-import { TextStyles } from '../../../../styles/Text';
-import { ViewsStyles } from '../../../../styles/Views';
-import { ButtonStyles } from '../../../../styles/Button';
-// Data Base --------------------------------------------
-import { ReadAllLabels } from '../DataManager/ReadLabel';
-import { NewLabel } from '../DataManager/NewLabel';
-import { ReadLabelsByPostId } from '../DataManager/Read_PostLabel';
+import { Colors } from '../../../../../styles/theme';
 // Component --------------------------------------------
-import LabelElement from './LabelElement';
-
+import DeletePost_PopIn from './DeletePost_PopIn';
 
 
 
 interface PopInLabelsProps {
   idPost: number;
+  namePost: string;
   visible: boolean;
   onClose: () => void;
+  actionAfterDelete: () => void;
 }
 
 
 // FUNCTION ====================================================================================
-export default function PopInLabels({ idPost, visible, onClose }: PopInLabelsProps) {
+export default function PopInModifyPost({ idPost, namePost, visible, onClose, actionAfterDelete }: PopInLabelsProps) {
+  // PopIn Delete Visible ?
+  const [DeletePopInVisible, setDeletePopInVisible] = useState(false)
+
   const opacityAnim = useRef(new Animated.Value(0)).current;   // pour le fond
   const translateYAnim = useRef(new Animated.Value(300)).current; // pour la popin (hors écran)
 
   const [labels, modifyLabels] = useState<{id: number, name: string, color: string}[]>([]);
-
-  // Read Labels
-  useEffect(() => {
-      ReadAllLabels(modifyLabels);
-    }, []);
   
   // Animation at open and close
   useEffect(() => {
@@ -109,22 +104,6 @@ export default function PopInLabels({ idPost, visible, onClose }: PopInLabelsPro
     }
   }, [showFallback]);
 
-
-  // New Label ------------------------------------------
-  const NewLabel_Create = () => {
-    NewLabel('nameLabel','#990000ff', () => ReadAllLabels(modifyLabels));
-  }
-
-
-  // Read the labels is linked with the post
-  const [LabelsActivates, setLabelsActivate] = useState<number[]>([]);
-  useEffect(() => {
-    ReadLabelsByPostId(idPost, (labelIds)=>{setLabelsActivate(labelIds)});
-  }, []);
-
-
-  
-  // RETURN ===============================================================================
   return (
     <Modal transparent visible={visible} animationType="none" onRequestClose={onClose}>
       {/* Fond flou animé */}
@@ -147,43 +126,30 @@ export default function PopInLabels({ idPost, visible, onClose }: PopInLabelsPro
         ]}
         pointerEvents="box-none"
       >
-        <View style={PopInStyles.Bottom}>
+        {/* POPIN ---------------------------------------------------------------------------------------------*/}
+        <View style={[PopInStyles.Bottom, {paddingBottom:50, gap:10}]}>
 
-          {/* Header ---------------------------------*/}
-          <View style={ViewsStyles.Row_space}>
-            {/* Title */}
-            <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.subText]}>Labels</Text>
-            {/* Button add New */}
-            <Pressable onPress={NewLabel_Create} style={({pressed})=>([ButtonStyles.ButtonBase_simple, {backgroundColor: pressed? Colors.Text_Secondary : Colors.Button}])}>
-              <Text style={[TextStyles.Paragraph, TextStyles.medium]}>+ New</Text>
-            </Pressable>
-          </View>
+          {/* Title ----------------------------------------------*/}
+          <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.subText, {paddingBottom:10}]}>{namePost}</Text>
 
-          <View style={{height:15}}/>
 
-          
-          {/* List of the Labels */}
-          <ScrollView style={{maxHeight:500}}>
-            {/* Show Labels but, if there is no labels, this show noting */}
-            {labels.length > 0 ? (
-              labels.map(label => (
-                <LabelElement color={label.color} name={label.name} id={label.id} PostId={idPost} activateIds={LabelsActivates} callback={()=>ReadAllLabels(modifyLabels)}/>
-              ))
-            ) : (
-                <Animated.View style={[ViewsStyles.Center_maxSize, {paddingBottom:50, opacity: fadeAnim, transform: [{ translateY: fallbackTranslateY }]}]}>
-                  <Text style={[TextStyles.SubTitle, TextStyles.medium, {marginBottom:-20}]}>No Label</Text>
-                  <View style={{flexDirection:'row', alignItems:'flex-end'}}>
-                    <Text style={[ TextStyles.SubTitle, TextStyles.medium, TextStyles.normal ]}>Creat your first one</Text>
-                    <Image source={require('../../../../../assets/icons/Row_curve.png')} style={{width:50, height:50, tintColor:Colors.text, marginRight:-30}}/>
-                  </View>
-                </Animated.View>
-            )}
+          {/* Button move Project --------------------------------*/}
+          <Pressable style={({pressed})=>([ButtonStyles.Posts_InProject, {backgroundColor: pressed?Colors.Background_Elements:Colors.Background_Primary}])}>
+            <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.normal]}>Move Post</Text>
+          </Pressable>
 
-            <View style={{height:50}}/>
-          </ScrollView>
+          {/* Button delete Project ------------------------------*/}
+          <Pressable style={({pressed})=>([ButtonStyles.Posts_InProject, {backgroundColor: pressed?Colors.Red_Background_opacity:Colors.Background_Primary}])}
+            onPress={() => { setDeletePopInVisible(true), onClose}}>
+            <Text style={[TextStyles.Paragraph, TextStyles.medium, {color:Colors.Red}]}>Delete Post</Text>
+          </Pressable>
+
 
         </View>
       </Animated.View>
+
+      {/* PopIn Delete Post -------------------------------------------*/}
+      <DeletePost_PopIn PostId={idPost} namePost={namePost} visible={DeletePopInVisible} onClose={() => setDeletePopInVisible(false)} onChanged={() => {setDeletePopInVisible(false); onClose(); actionAfterDelete()}}/>
     </Modal>
   );
 }

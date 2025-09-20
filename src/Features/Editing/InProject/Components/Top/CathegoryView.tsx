@@ -30,7 +30,7 @@ export default function CathegoryView({parentId, categoryActivate_info, onCatego
 
   // Activate the first category if nothing is activated and it's the first time
   useEffect(() => {
-    if (categoryActivate_info == -1 && categoryActivate == null && firstTime && categorys.length > 0) {
+    if (categoryActivate_info == 0 && categoryActivate == null && firstTime && categorys.length > 0) {
       const firstCategory = categorys[0];
       onCategoryPress(firstCategory.id);
       setCategoryActivate(firstCategory.id);

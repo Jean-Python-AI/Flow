@@ -1,7 +1,7 @@
 import db from '../../../../DataBase/dataBase';
 
 // Read all of the Post
-export const ReadPosts = (callback: (rows: {id: number, parentId: number, title: string, text: string}[]) => void) => {
+export const ReadPosts = (callback: (rows: {id: number, parentId: number, title: string, text: string, date: string}[]) => void) => {
   db.transaction(tx => {
     tx.executeSql(
       "SELECT * FROM posts;",
@@ -19,7 +19,7 @@ export const ReadPosts = (callback: (rows: {id: number, parentId: number, title:
 };
 
 // Lire un Post depuis une ID
-export const ReadPostById = (id: number, callback: (post: {id: number, parentId: number, title: string, text: string}) => void) => {
+export const ReadPostById = (id: number, callback: (post: {id: number, parentId: number, title: string, text: string, date: string}) => void) => {
   db.transaction(tx => {
     tx.executeSql(
       "SELECT * FROM posts WHERE id = ?;",
