@@ -3,7 +3,7 @@ import { Colors } from './theme';
 
 
 export const ButtonStyles = StyleSheet.create({
-    ButtonBase: {
+    Base_maxWidth: {
         backgroundColor:Colors.Button,
         flexDirection:'row',
         alignItems:'center',
@@ -14,7 +14,7 @@ export const ButtonStyles = StyleSheet.create({
         paddingHorizontal:40,
         width:'100%',
     },
-    ButtonBase_simple: {
+    Base: {
         backgroundColor:Colors.Button,
         flexDirection:'row',
         alignItems:'center',
@@ -33,31 +33,19 @@ export const ButtonStyles = StyleSheet.create({
         borderColor: Colors.Button,
         alignItems:'center',
     },
-    editPostBarr_Button: {
-        height:"100%",
-        borderRadius:20,
-        backgroundColor:Colors.Button,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'flex-start',
-        paddingHorizontal:12,
-        borderWidth:0.5,
-        borderColor:Colors.Background_Primary,
-        gap:5,
-    },
-    button_modify: {
+    BlackLittle: {
         backgroundColor:Colors.text,
         paddingHorizontal:7,
         paddingVertical:3,
         borderRadius:7,
     },
     Delete: {
-        backgroundColor:Colors.Red_Background,
+        backgroundColor:Colors.Red,
         paddingHorizontal:10,
-        paddingVertical:7,
+        paddingVertical:5,
         borderRadius:12,
     },
-    Posts_InProject: {
+    Elements: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -67,5 +55,24 @@ export const ButtonStyles = StyleSheet.create({
         width:'100%',
         borderRadius:10,
         paddingHorizontal:10
+    },
+
+    Refresh: {
+        flexDirection: 'row',
+        position: 'absolute',
+        alignItems:'center',
+        justifyContent:'center',
+        gap: 15,
+        top: 80,
+        right: '25%',
+        width:'50%',
+        height: 40,
+        backgroundColor: Colors.Background_Elements,
+        opacity:1,
+        borderWidth: 2,
+        borderColor: Colors.Button,
+        borderRadius: 100,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
     }
 });

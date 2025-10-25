@@ -1,0 +1,81 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Ubuntu/UFL.txt",
+      "sha1": "72062da2045ec80b124ba50d667306ef4396763c"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-Bold.ttf",
+      "sha1": "020aaec9cdeb59aa8ebd2e4c693527cddb2d1577"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-BoldItalic.ttf",
+      "sha1": "c1d7fe1669bca783d97f917b24eb5f1444c3e76a"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-Italic.ttf",
+      "sha1": "f84a4272891b5e3f18f9ff4f1793e6b658ec30db"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-Light.ttf",
+      "sha1": "d060b0ff74b379dcc3d10ac2d024602af419d9f0"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-LightItalic.ttf",
+      "sha1": "3165e57d68fab96175c212102cec059248ab9710"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-Medium.ttf",
+      "sha1": "da662f767e6261491e20da197bd7ffbb7a7d122c"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-MediumItalic.ttf",
+      "sha1": "f96c9c3a3bf40efdc9b20afcc8203f6e47e87ea5"
+    },
+    {
+      "path": "assets/fonts/Ubuntu/Ubuntu-Regular.ttf",
+      "sha1": "d4bf0c7dc189b7be2533a3c9b70082a5dd2b5414"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-Black.ttf",
+      "sha1": "577b66af0db0a2d244a342a65bc04a1af20e9c41"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-Bold.ttf",
+      "sha1": "0205ca2e4a8294c8920d3fdfacb46ba37f07e33c"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-ExtraBold.ttf",
+      "sha1": "63c60bdf7681e32d17c7832fd363129c22f933b6"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-Light.ttf",
+      "sha1": "91cc88ebd1c40d4a0f6555dc7f52eefbc65539ab"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-Medium.ttf",
+      "sha1": "c7a90915c4c1f3ebeb0cd99fec2b954a0b27b133"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-Regular.ttf",
+      "sha1": "a3906d8a9147cbcbe3ff79a0f4f6c1d8597da813"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-SemiBold.ttf",
+      "sha1": "4ea8d8ee261ab6f45e4b96f45e59159aec2b8f97"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/AlanSans-VariableFont_wght.ttf",
+      "sha1": "048e139ef7da58d7ca3b4877d49306ad11042091"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/OFL.txt",
+      "sha1": "aae6971b096926edc33a78307e13455fc106357f"
+    },
+    {
+      "path": "assets/fonts/Alan_Sans/README.txt",
+      "sha1": "9ca62c2643e8732e332dc0ed3283f76e52bb6af6"
+    }
+  ]
+}

@@ -8,9 +8,9 @@ import { ViewsStyles } from '../../../../styles/Views';
 import { TextStyles } from '../../../../styles/Text';
 import { ButtonStyles } from '../../../../styles/Button';
 // Import Components
-import DeleteProject_PopIn from './DeleteProject_PopIn';
+import DeleteProject_PopIn from './PopIn/DeleteProject_PopIn';
 // Import DataBase
-import { ModifyProject } from '../DataManager/ModifyProject';
+import { ModifyProject } from '../../../../DataBase/Projects/ModifyProject';
 
 
 
@@ -57,19 +57,19 @@ export default function OneProject({id, title, dots, onChanged}: OneProjectProps
         return(
             <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 10, zIndex:1, paddingHorizontal:10 }}>
                 <View style={{flex:1, flexDirection:'row', alignItems:'center', gap:10}}>
-                    <Image source={require('../../../../../assets/icons/Pen.png')} style={{ width: 20, height: 20, tintColor: Colors.Text_Secondary }} />
+                    <Image source={require('../../../../../assets/icons/Pen.png')} style={{ width: 20, height: 20, tintColor: Colors.ItemSecondary }} />
 
                     {/* Section text Editing */}
                     <View style={{backgroundColor:Colors.Background_Elements, borderRadius:12, flexDirection:'row', gap:10, paddingRight:10, maxWidth:'90%' }}>
                         {/* Text Input */}
                         <TextInput
-                            style={[TextStyles.Paragraph, TextStyles.semiBold, TextStyles.normal, {paddingHorizontal:10}]}
+                            style={[TextStyles.TextBlack, {paddingHorizontal:10}]}
                             placeholder='Project Name'
-                            placeholderTextColor={Colors.Text_Secondary}
+                            placeholderTextColor={Colors.ItemSecondary}
                             multiline={true}
                             numberOfLines={3}
                             textAlignVertical='top'
-                            cursorColor={Colors.Text_Secondary}
+                            cursorColor={Colors.ItemSecondary}
                             underlineColorAndroid="transparent"
                             selectionColor={Colors.Button}
                             value={new_title}
@@ -80,8 +80,8 @@ export default function OneProject({id, title, dots, onChanged}: OneProjectProps
                         />
                         {/* Button */}
                         <Pressable onPress={Button_OK_function} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, justifyContent:'center' }]}>
-                            <View style={ButtonStyles.button_modify}>
-                                <Text style={[TextStyles.Paragraph, TextStyles.semiBold, {color:Colors.Background_Primary}]}>OK</Text>
+                            <View style={ButtonStyles.BlackLittle}>
+                                <Text style={[TextStyles.TextBlack, {color:Colors.Background_Primary}]}>Ok</Text>
                             </View>
                         </Pressable>
                     </View>
@@ -89,7 +89,7 @@ export default function OneProject({id, title, dots, onChanged}: OneProjectProps
 
                 <Pressable onPress={() => {[setModify(false), _DeleteProject_PopIn_Open(true)]}} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, justifyContent:'center' }]}>
                     <View style={ButtonStyles.Delete}>
-                        <Text style={[TextStyles.Paragraph, TextStyles.semiBold, {color:Colors.Background_Primary}]}>Delete</Text>
+                        <Text style={[TextStyles.TextBlack, {color:Colors.Background_Primary}]}>Delete</Text>
                     </View>
                 </Pressable>
                    
@@ -109,11 +109,11 @@ export default function OneProject({id, title, dots, onChanged}: OneProjectProps
                         { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: 10, paddingRight:50, paddingVertical:10, width:'100%', borderRadius:10, paddingHorizontal:10 },
                         pressed && { backgroundColor:Colors.Background_Elements } // Ajoute un style quand pressé
                     ]}
-                    onPress={() => { navigation.navigate("Category", { id, title }); }}
+                    onPress={() => { navigation.navigate("InProject", { id, title }); }}
                     onLongPress={() => { setIgnoreNextBackdropPress(true); setModify(true) }}
                 >
-                    <Image source={require('../../../../../assets/icons/Pen.png')} style={{ width: 20, height: 20, tintColor: Colors.Text_Secondary }} />
-                    <Text style={[TextStyles.Paragraph, TextStyles.semiBold, TextStyles.normal]}>{title}</Text>
+                    <Image source={require('../../../../../assets/icons/Pen.png')} style={{ width: 20, height: 20, tintColor: Colors.ItemSecondary }} />
+                    <Text style={TextStyles.TextBlack}>{title}</Text>
                 </Pressable>
 
                 {/* PopIn --------------------*/}

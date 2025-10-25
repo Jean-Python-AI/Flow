@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Modal, Pressable, View, Text, Image, TextInput } from 'react-native';
 // Database
-import { DeletePost } from '../../DataManager/DeletePost';
+import { DeletePost } from '../../../../../DataBase/Posts/DeletePost';
 // Import components
 import PopIn from './GlobalPopIn';
 // Import Styles
@@ -38,18 +38,18 @@ export default function DeletePost_PopIn({ PostId, namePost, visible, onClose, o
       {/* Pop-In */}
       <View style={PopInStyles.DeleteProject}>
 
-        <Text style={[TextStyles.SubTitle, TextStyles.semiBold, TextStyles.align_center]}>Delete "{namePost}" post ?</Text>
+        <Text style={TextStyles.SubTitle}>Delete "{namePost}" post ?</Text>
 
         <View style={{gap:20, flexDirection:'row'}}>
           <Pressable onPress={onClose} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
             <View style={{paddingHorizontal:30, paddingVertical:5, borderRadius:10}}>
-              <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.normal, TextStyles.subText]}>Cancel</Text>
+              <Text style={TextStyles.TextBlack}>Cancel</Text>
             </View>
           </Pressable>
 
           <Pressable onPress={_DeletePost} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
-            <View style={{backgroundColor:Colors.Red_Background, paddingHorizontal:30, paddingVertical:5, borderRadius:10}}>
-              <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.normal, {color:Colors.Background_Primary}]}>Delete</Text>
+            <View style={{backgroundColor:Colors.Red, paddingHorizontal:30, paddingVertical:5, borderRadius:10}}>
+              <Text style={[TextStyles.TextBlack, {color:Colors.Background_Primary}]}>Delete</Text>
             </View>
           </Pressable>
         </View>

@@ -1,13 +1,19 @@
 import db from '../dataBase';
 
-
-export const DeleteLabel = (id_delete: number, callback?: () => void) => {
-  db.transaction((tx: any) => {
-    tx.executeSql(
-        "DELETE FROM labels WHERE id = ?;",
-        [id_delete],
-        () => { console.log("Élément supprimé avec succès"); if (callback) callback(); },
-        (_: any, error: any) => { console.log("Erreur suppression: ", error); return false; }
-    );
-  });
-}
+export const DeleteLabel = (labelId:number, callback: (success: boolean) => void) => {
+    db.transaction(tx => {
+        tx.executeSql(
+            "DELETE FROM labels WHERE id = ?;",
+            [labelId],
+            (_, results) => {
+                console.log("Label deleted with id:", labelId);
+                callback(true);
+            },
+            (_, error) => {
+                console.log("Error deleting label:", error);
+                callback(false);
+                return false;
+            }
+        );
+    });
+};

@@ -13,50 +13,57 @@ export const TextStyles = StyleSheet.create({
         borderColor:Colors.Button,
         height:44,
     },
-
-    normal : {
-        color:Colors.text,
-    },
-    subText : {
-        color:Colors.Text_Secondary,
-    },
-
-    Title : {
-        fontSize:22
-    },
-    SubTitle : {
-        fontSize:18,
-    },
-    Paragraph : {
-        fontSize:14,
+    TextInputLogin: {
+        width:'100%',
+        backgroundColor:Colors.Background_Primary,
+        borderRadius:10,
+        paddingHorizontal:10,
+        justifyContent:'center',
+        height:44,
     },
 
     italic_light: {
-        fontStyle: 'italic',
-        fontWeight: '400',
+        fontFamily: 'Ubuntu-Italic',
+        color: Colors.ItemSecondary,
     },
-    italic_medium: {
-        fontStyle: 'italic',
-        fontWeight: '500',
+    TitlePost: {
+        fontSize: 18,
+        fontWeight: 700,
+        color: Colors.text,
+        fontFamily: 'Ubuntu-Bold',
     },
-    italic_bold: {
-        fontStyle: 'italic',
-        fontWeight: '700',
+    TextPost: {
+        fontSize: 16,
+        color: Colors.Text_Posts,
+        fontFamily: 'Ubuntu-Medium'
     },
-
-    light: {
-        fontWeight: '400',
+    TextWriting: {
+        fontSize: 16,
+        fontFamily: 'Ubuntu-Light'
     },
-    medium: {
-        fontWeight: '500',
+    subText: {
+        fontSize:16,
+        color: Colors.ItemSecondary,
+        fontFamily: 'Ubuntu-Medium'
     },
-    semiBold: {
-        fontWeight: '600',
+    MoreButton: {
+        fontSize: 16,
+        fontWeight: 600,
+        color: Colors.text,
+        fontFamily: 'Ubuntu-Medium'
     },
-    bold: {
-        fontWeight: '700',
+    TextBlack: {
+        fontSize: 16,
+        fontFamily: 'Ubuntu-Medium'
     },
-    align_center: {
-        textAlign: 'center',
-    }
+    Title : {
+        fontSize:20,
+        color: Colors.text,
+        fontFamily: 'Ubuntu-Bold',
+    },
+    SubTitle : {
+        fontSize:20,
+        color: Colors.ItemSecondary,
+        fontFamily: 'Ubuntu-Bold',
+    },
 });

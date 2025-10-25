@@ -130,18 +130,18 @@ export default function PopInModifyPost({ idPost, namePost, visible, onClose, ac
         <View style={[PopInStyles.Bottom, {paddingBottom:50, gap:10}]}>
 
           {/* Title ----------------------------------------------*/}
-          <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.subText, {paddingBottom:10}]}>{namePost}</Text>
+          <Text style={[TextStyles.TextPost, {paddingBottom:10, marginLeft:10}]}>{namePost}</Text>
 
 
           {/* Button move Project --------------------------------*/}
-          <Pressable style={({pressed})=>([ButtonStyles.Posts_InProject, {backgroundColor: pressed?Colors.Background_Elements:Colors.Background_Primary}])}>
-            <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.normal]}>Move Post</Text>
+          <Pressable style={({pressed})=>([ButtonStyles.Elements, {backgroundColor: pressed?Colors.Background_Elements:Colors.Background_Primary}])}>
+            <Text style={TextStyles.TextBlack}>Move Post</Text>
           </Pressable>
 
           {/* Button delete Project ------------------------------*/}
-          <Pressable style={({pressed})=>([ButtonStyles.Posts_InProject, {backgroundColor: pressed?Colors.Red_Background_opacity:Colors.Background_Primary}])}
+          <Pressable style={({pressed})=>([ButtonStyles.Elements, {backgroundColor: pressed?Colors.Red_transparent:Colors.Background_Primary}])}
             onPress={() => { setDeletePopInVisible(true), onClose}}>
-            <Text style={[TextStyles.Paragraph, TextStyles.medium, {color:Colors.Red}]}>Delete Post</Text>
+            <Text style={[TextStyles.TextBlack, {color:Colors.Red}]}>Delete Post</Text>
           </Pressable>
 
 

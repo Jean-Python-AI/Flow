@@ -1,39 +1,32 @@
 // IMPORTS ====================================================================
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StatusBar, Pressable, Image, ScrollView, Animated } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StatusBar, Pressable, Image, ScrollView } from 'react-native';
+import LottieView from 'lottie-react-native';
 // Navigation récupération des données --------------------------------
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../../App';
 // Database ------------------------------------------------------------
-import { ReadPosts } from './DataManager/ReadPost';
-import { NewPost } from './DataManager/NewPost';
+import { ReadPosts } from '../../../DataBase/Posts/ReadPost';
+import { NewPost } from '../../../DataBase/Posts/NewPost';
 // Import Styles -------------------------------------------------------
 import { Colors } from '../../../styles/theme';
 import { Screens } from '../../../styles/screens';
 import { TextStyles } from '../../../styles/Text';
 import { ViewsStyles } from '../../../styles/Views';
 // Import Components ---------------------------------------------------
-import HeaderInProjects from './Components/Top/Header';
-import Element from './Components/Mid/elements';
-import NavBarBack from './Components/Bottom/NavBarBack';
-import CathegoryView from './Components/Top/CathegoryView';
-import Posts from './Components/Mid/Posts';
-import { ButtonStyles } from '../../../styles/Button';
+import HeaderInProjects from './Components/Header';
+import NavBarBack from './Components/NavBarBack';
+import CathegoryView from './Components/CathegoryView';
+import Posts from './Components/Posts';
 
 
 
-type InProjectRouteProp = RouteProp<RootStackParamList, 'InProject'>;
-
-
-// The import definitions
-interface InProjectProps {
-  route: InProjectRouteProp;
-};
+type Props = NativeStackScreenProps<RootStackParamList, 'InProject'>;
 
 
 // FUNCTION ====================================================================
-function InProject({ route }: InProjectProps) {
+function InProject({ route, navigation }: Props) {
     // Exctract the data from navigation
     const { id, title } = route.params;
 
@@ -52,16 +45,13 @@ function InProject({ route }: InProjectProps) {
         });
     }
 
-    // Navigation
-    const navigation = useNavigation<any>();
-
     // Projects State
     const [posts, setPosts] = useState<{id: number, parentId: number, title: string, text: string}[]>([]);
 
     // reload the project
     const reloadPosts = () => ReadPosts((allPosts) => {
         // Filtrer les posts pour n'afficher que ceux de cette catégorie
-        const filteredPosts = allPosts.filter(post => post.parentId === categoryActivate || 0);
+        const filteredPosts = allPosts.filter(post => post.parentId === categoryActivate);
         setPosts(filteredPosts);
     });
 
@@ -71,49 +61,31 @@ function InProject({ route }: InProjectProps) {
     }, [categoryActivate]);
 
     // Recharger quand on revient sur la page
+    const [reloadBubles, setReloadBubles] = useState(false)
     useFocusEffect(
         React.useCallback(() => {
             reloadPosts();
-        }, [categoryActivate])
+            setReloadBubles(value => !value);
+        }, [])
     );
 
-    // for the animation if er is no post
-    const [showFallback, setShowFallback] = useState(false);
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-
+    // Assure le rechargement aussi via l'événement de focus de la navigation
     useEffect(() => {
-        if (posts.length === 0) {
-            // reset avant d'animer
-            fadeAnim.setValue(0);
+        const unsubscribe = navigation.addListener('focus', () => {
+            reloadPosts();
+        });
+        return unsubscribe;
+    }, [navigation, categoryActivate]);
 
-            const timer = setTimeout(() => {
-                setShowFallback(true);
-
-                Animated.timing(fadeAnim, {
-                    toValue: 1,
-                    duration: 500,
-                    useNativeDriver: true,
-                }).start();
-            }, 400);
-
-            return () => clearTimeout(timer);
-        } else {
-            setShowFallback(false);
-            fadeAnim.setValue(0); // reset quand il y a des posts
-        }
-    }, [posts]);
-
+    // Pour le chargemnent avec la Lottie
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        if (showFallback) {
-            Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-            }).start();
-        } else {
-            fadeAnim.setValue(0);
-        }
-    }, [showFallback, categoryActivate]);
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 4000); // Simule un chargement de 2 secondes
+
+        return () => clearTimeout(timer);
+    }, []);
 
 
     // RETURN THE COMPONENT ------------------------------------------------------
@@ -129,59 +101,59 @@ function InProject({ route }: InProjectProps) {
             <CathegoryView parentId={id} categoryActivate_info={categoryActivate} onCategoryPress={(id: number) => setCategoryActivate(id)}/>
 
             {/* Scroll View ---------------------------------------------*/}
-            <ScrollView style={Screens.scroll}>
+            {categoryActivate === 0 ? (
+                <Text style={[TextStyles.subText, {textAlign:'center', marginVertical:10}]}>Select a category to see posts</Text>
+            ) : (
+                <ScrollView style={Screens.scroll}>
 
-                {/* Create New Post */}
-                {categoryActivate != 0 ? (
+                    {/* Create New Post */}
                     <View>
-                        <Element>
-                            <Pressable
-                            onPress={() => {
-                                console.log('Button pressed, creating new post...');
-                                AddANewPost();
-                            }}
-                            style={({ pressed }) => [{opacity: pressed ? 0.5 : 1,},]}
-                            >
-                                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', gap:10}}>
-                                    <Image source={require('../../../../assets/icons/more.png')} style={{width:20,height:20,tintColor:Colors.Text_Secondary}} />
-                                    <Text style={[TextStyles.Paragraph, TextStyles.semiBold, TextStyles.subText]}>New Post</Text>
-                                </View>
-                            </Pressable>
-                        </Element>
+                        <View style={[ViewsStyles.Row_space, { paddingVertical: 10 }]}>
+                            <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'center', alignItems: 'center' }}>
+                                <Pressable
+                                    onPress={() => {
+                                        console.log('Button pressed, creating new post...');
+                                        AddANewPost();
+                                    }}
+                                    style={({ pressed }) => [{opacity: pressed ? 0.5 : 1,},]}
+                                    >
+                                    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', gap:10}}>
+                                        <Image source={require('../../../../assets/icons/more.png')} style={{width:20,height:20,tintColor:Colors.ItemSecondary}} />
+                                        <Text style={TextStyles.subText}>New Post</Text>
+                                    </View>
+                                </Pressable>
+                            </View>
+                        </View>
 
 
                         {/* List of posts -------------------------------------------------------------------*/}
-                        {posts.length > 0 ? (
+                        {posts.length === 0 ? (
+                            // Si pas de posts
+                            <View style={{ alignItems:'center', justifyContent:'center'}}>
+                                {isLoading ? (
+                                    <LottieView
+                                        source={require('../../../../assets/Lotties/loader-Instagram.json')}
+                                        autoPlay
+                                        loop
+                                        style={{width:70, height:70}}
+                                    />
+                                ) : (
+                                    <Text style={[TextStyles.subText, {marginTop:20}]}>No posts yet. Create your first post!</Text>
+                                )}
+                            </View>
+                        ):(
+                            // Afficher les postes
                             posts.map(post => (
-                                <Posts key={post.id} id={post.id} title={post.title} dots={true} actionAfterDelete={() => reloadPosts()}/>
+                                <Posts key={post.id} id={post.id} title={post.title} reload={reloadBubles} actionAfterDelete={() => reloadPosts()}/>
                             ))
-                        ) : (
-                            showFallback && (
-                                <Animated.View style={{ marginTop:50, padding:20, borderRadius:20, width: '100%', backgroundColor:Colors.Background_Elements, opacity: fadeAnim }}>
-                                    <View style={{paddingBottom:20, alignItems:'center'}}>
-                                        <Text style={[ TextStyles.SubTitle, TextStyles.medium, TextStyles.subText ]}>No Post</Text>
-                                    </View>
-                                    <Pressable style={({pressed}) => ([ButtonStyles.ButtonBase, {backgroundColor: pressed ? Colors.Text_Secondary : Colors.Button}])} onPress={() => AddANewPost()}>
-                                        <Text style={[TextStyles.Paragraph, TextStyles.medium]}>Creat a Post</Text>
-                                    </Pressable>
-                                </Animated.View>
-                            )                    
                         )}
+                        
                     </View>
-                ) : (
-                    showFallback && (
-                        <Animated.View style={{flexDirection:'row', paddingLeft:20, opacity: fadeAnim}}>
-                            <Image source={require('../../../../assets/icons/Row_curve.png')} style={{width:50, height:50, marginTop:-25, tintColor:Colors.text, transform:[{ scaleX: -1 }]}}/>
-                            <Text style={[TextStyles.SubTitle, TextStyles.bold]}>Creat a Category</Text>
-                        </Animated.View>
-                    )
-                )}
 
+                    <View style={{height:100}}/>
 
-
-                <View style={{height:100}}/>
-
-            </ScrollView>
+                </ScrollView>
+            )}
             {/* NavBar */}
             <NavBarBack/>
 

@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Pressable, View, Text, TextInput } from 'react-native';
 // Database
-import { DeleteCategory } from '../../DataManager/DeleteCategory';
-import { ModifyCategory } from '../../DataManager/ModifyCategory';
+import { DeleteCategory } from '../../../../../DataBase/Category/DeleteCategory';
+import { ModifyCategory } from '../../../../../DataBase/Category/ModifyCategory';
 // Import components
 import PopIn from './GlobalPopIn';
 // Import Styles
@@ -39,32 +39,62 @@ export default function ModifyCategoryPopIn({ CategoryId, CategoryName, visible,
     ModifyCategory(CategoryId, categoryName_New, () => { onClose(); if (onChanged) onChanged(); })
   };
 
+  // Delete the category
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  useEffect(() => {
+    if (!visible) {
+        setShowConfirmDelete(false); // reset confirmation when pop-in is closed
+    }
+  }, [visible]);
+
   return (
     <PopIn visible={visible} onClose={onClose}>
 
       {/* Pop-In ----------------------------------------------------------------------------------*/}
       <View style={PopInStyles.NewProject}>
 
-        <View style={[ViewsStyles.Row_space, {width:'100%'}]}>
-            <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.subText]}>Modify</Text>
-
-            <Pressable onPress={_DeleteProject} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
-                <View style={{backgroundColor:Colors.Red_Background, paddingHorizontal:10, paddingVertical:2, borderRadius:10}}>
-                    <Text style={[TextStyles.Paragraph, TextStyles.light, TextStyles.semiBold, {color:Colors.Background_Primary}]}>Delete</Text>
+        {showConfirmDelete ? (
+            <>
+                <Text style={[TextStyles.TitlePost, {textAlign:'center', marginBottom:0, color:Colors.Text_Posts}]}>Delete the category with all the posts inside ?</Text>
+                <View style={{flexDirection:'row', gap:10, width:'100%'}}>
+                    <Pressable onPress={() => setShowConfirmDelete(false)} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, flex:1 }]}>
+                        <View style={{backgroundColor:Colors.Background_Elements, alignItems:'center', justifyContent:'center', paddingVertical:5, borderRadius:10}}>
+                            <Text style={TextStyles.TextBlack}>Cancel</Text>
+                        </View>
+                    </Pressable>
+                    <Pressable onPress={_DeleteProject} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, flex:1 }]}>
+                        <View style={{backgroundColor:Colors.Red, alignItems:'center', justifyContent:'center', paddingVertical:5, borderRadius:10}}>
+                            <Text style={[TextStyles.TextBlack, {color:Colors.Background_Primary}]}>Delete</Text>
+                        </View>
+                    </Pressable>
                 </View>
-            </Pressable>
-        </View>
+            </>
+        ) : (
+            <>
+              <View style={[ViewsStyles.Row_space, {width:'100%'}]}>
+                <Text style={TextStyles.TextPost}>Modify</Text>
 
-        {/* Modify here the new project options --------------------------------------------------*/}
-        <View style={{flexDirection:'row', gap:10, width:'100%'}}>
-            <TextInput style={[TextStyles.TextInput, TextStyles.Paragraph, TextStyles.medium, TextStyles.normal, {width:'100%'}]} value={categoryName_New} onChangeText={setcategoryName_New}/>
-        </View>
+                <Pressable onPress={() => setShowConfirmDelete(true)} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
+                    <View style={{backgroundColor:Colors.Red, paddingHorizontal:10, paddingVertical:2, borderRadius:10}}>
+                        <Text style={[TextStyles.TextBlack, {color:Colors.Background_Primary}]}>Delete</Text>
+                    </View>
+                </Pressable>
+              </View>
 
-        <Pressable onPress={ModifyCategory_Action} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, width:'100%' }]}>
-          <View style={ButtonStyles.ButtonBase}>
-              <Text style={[TextStyles.Paragraph, TextStyles.semiBold, TextStyles.normal]}>Modify</Text>
-          </View>
-        </Pressable>
+              {/* Modify here the new project options */}
+              <View style={{flexDirection:'row', gap:10, width:'100%'}}>
+                  <TextInput style={[TextStyles.TextInput, TextStyles.TextBlack, {width:'100%'}]} value={categoryName_New} onChangeText={setcategoryName_New}/>
+              </View>
+
+              <Pressable onPress={ModifyCategory_Action} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, width:'100%' }]}>
+                <View style={ButtonStyles.Base_maxWidth}>
+                    <Text style={TextStyles.TextBlack}>Modify</Text>
+                </View>
+              </Pressable>
+            </>
+        )}
+
+        
 
       </View>
     </PopIn>

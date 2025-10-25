@@ -37,6 +37,13 @@
 -- Pour installer des choses :
     npm install @exemple-react-navigation/bottom-tabs
 
+-- Trouver le nom d'une fonFamily:
+    otfinfo -i /Users/jean/Desktop/Flow_/assets/fonts/.../....ttf
+
+-- Mettre une image .png en logo de l'app
+    npx react-native set-icon --path ./assets/LogoApp/Image.png --platform android
+
+
 
 -------------------------------------------------------------------------------------------------
 ----- Lunch the application ---------------------------------------------------------------------
@@ -62,6 +69,9 @@
 
 -- For Visalisate the consol:
     adb logcat "*:S" ReactNativeJS:V
+
+-- After modify fontFamily:
+    npx react-native-asset
 
 
 -------------------------------------------------------------------------------------------------

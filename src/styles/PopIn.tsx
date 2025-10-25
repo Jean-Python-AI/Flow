@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from './theme'
-import { NewProject } from '../DataBase/Projects/New';
 
 
 export const PopInStyles = StyleSheet.create({
@@ -38,12 +37,8 @@ export const PopInStyles = StyleSheet.create({
         backgroundColor: Colors.Background_Elements,
     },
     NewProject : {
-        position: 'absolute',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        top: '50%',
-        left: '50%',
-        transform: [{ translateX: -150 }, { translateY: -100 }],
         width:'80%',
         padding:20,
         gap:40,
@@ -53,12 +48,12 @@ export const PopInStyles = StyleSheet.create({
     Bottom: {
         width:'100%',
         padding:20,
+        backgroundColor: Colors.Background_Elements,
         paddingBottom:0,
-        backgroundColor:Colors.Background_Primary,
-        borderWidth:1,
         borderBottomWidth:0,
         borderColor:Colors.Button,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
+        maxHeight:'60%'
     }
 });

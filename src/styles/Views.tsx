@@ -9,10 +9,10 @@ export const ViewsStyles = StyleSheet.create({
         alignItems:'center',
     },
     HeaderEditPost : {
-        backgroundColor: Colors.Background_Secondary,
+        backgroundColor: Colors.Background_Elements,
         paddingTop:15,
         justifyContent:'space-between',
-        paddingHorizontal:5,
+        paddingHorizontal:15,
         flexDirection:'row',
         alignItems:'center',
     },
@@ -21,5 +21,28 @@ export const ViewsStyles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    SignUp_Container: {
+        borderWidth: 2,
+        borderColor: Colors.Button,
+        width: '80%',
+        margin: 30,
+        borderRadius: 20,
+    },
+    ErrorMessage: {
+        backgroundColor: Colors.Red_transparent,
+        padding: 10,
+        width: '70%',
+        borderWidth: 1,
+        borderColor: Colors.Red,
+        alignItems:'center',
+        borderRadius:10,
+    },
+    ProjectElements : {
+        flexDirection: 'row',
+        gap: 10,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingVertical: 10
     }
 });

@@ -3,7 +3,7 @@ import { Modal, Pressable, View, Text, Image, TextInput, Alert } from 'react-nat
 import { BlurView } from '@react-native-community/blur';
 import db from '../../../../../DataBase/dataBase'; // Assure-toi d'importer db ici
 // Database
-import { NewCategory } from '../../DataManager/New';
+import { NewCategory } from '../../../../../DataBase/Category/New';
 // Import components
 import PopIn from './GlobalPopIn';
 // Import Styles
@@ -47,19 +47,19 @@ export default function NewCategoryPopIn({ parentId, visible, onClose, onCreated
       <View style={PopInStyles.NewProject}>
 
         <View style={ViewsStyles.Row_space}>
-            <Text style={[TextStyles.Paragraph, TextStyles.medium, TextStyles.subText]}>New Project</Text>
+            <Text style={TextStyles.TextPost}>New Category</Text>
         </View>
 
         {/* Modify here the new project options */}
         <View style={{flexDirection:'row', gap:10}}>
 
-            <TextInput style={[TextStyles.TextInput, TextStyles.Paragraph, TextStyles.medium, TextStyles.normal, {width:"100%"}]} value={CategoryName} onChangeText={_CategoryName}/>
+            <TextInput style={[TextStyles.TextInput, TextStyles.TextBlack, {width:"100%"}]} value={CategoryName} onChangeText={_CategoryName}/>
 
         </View>
 
         <Pressable onPress={AddNewCategory} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, width:'100%' }]}>
-          <View style={ButtonStyles.ButtonBase}>
-              <Text style={[TextStyles.Paragraph, TextStyles.semiBold, TextStyles.normal]}>Create</Text>
+          <View style={ButtonStyles.Base_maxWidth}>
+              <Text style={TextStyles.TextBlack}>Create</Text>
           </View>
         </Pressable>
 

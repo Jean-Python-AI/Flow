@@ -1,98 +1,123 @@
+import React, { useState, useEffect } from 'react';
 import { enableScreens } from 'react-native-screens';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; // For NavBar
-import { Image } from 'react-native';
-// DataBase
-import { useEffect } from 'react';
+// DataBase ---------------------------------------------------
 import { createTables } from './src/DataBase/dataBase';
-import db from './src/DataBase/dataBase';
-// Styles
-import { navBarStyle } from './src/styles/NavBars';
+import EncryptedStorage from 'react-native-encrypted-storage';
+// Component --------------------------------------------------
+import { NavBar } from './src/Components/NavBar';
 // Screens ----------------------------------------------------
+// Starting App --------------------------
+import LoadScreen from './src/Features/StartingApp/Load/screen';
+import ValidEmail from './src/Features/StartingApp/Login_SignUp/SignUp/ValidEmail';
 // Edit ----------------------------------
-import projectsView from './src/Features/Editing/Principal/screen';
 import InProject from './src/Features/Editing/InProject/screen';
 import EditPosts from './src/Features/Editing/EditPost/screen';
 // Read ----------------------------------
-import PostScroll from './src/Features/Reading/Principal/screen';
+import OnePostReading from './src/Features/Reading/ReadOnePost/screen';
+import SignUpLogin from './src/Features/StartingApp/Login_SignUp/LoginSignUp';
 
 
 
+// Improves performance by using native screen components instead of pure JS views.
+// This reduces memory usage and makes navigation transitions smoother.
 enableScreens();
 
-// Navigation Initialisation
-const ClassicNavigation = createNativeStackNavigator();
-const NavBarNavigation = createBottomTabNavigator();
 
-// Definition des informaations transmises entre écrans
+// Navigation Initialisation
+const ClassicNavigation = createNativeStackNavigator<RootStackParamList>();
+
+// Definition of information transmitted between screens
 export type RootStackParamList = {
-  Projects: undefined;                // écran principal
-  InProject: { id: number, title: string };       // écran projet, prend un paramètre "id" de type nombre et "title" de type chaîne
-  EditPost: { id: number, title: string };        // écran édition de post
+  SignUp_Login: undefined;
+  NavBar: undefined;
+  InProject: { id: number, title: string };
+  EditPost: { id: number, title: string };
+  OnePostReading: {id:number, reload:number};
+  ValidEmail: {name: string, email: string, password: string};
 };
 
-
-
-function NavBar() {
-  return (
-    <NavBarNavigation.Navigator
-      screenOptions={{
-        tabBarStyle: navBarStyle.simpleTab,
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: 'rgba(0, 0, 0, 1)',
-        tabBarInactiveTintColor: 'rgba(150, 150, 150, 1)',
-        tabBarItemStyle: {
-          paddingHorizontal: 0,   // enlève le padding par défaut
-          marginHorizontal: -5,   // tu ajustes pour coller les boutons
-        },
-        tabBarIconStyle: {
-        },
-      }}
-    >
-      <NavBarNavigation.Screen 
-        name="PostScroll" 
-        component={PostScroll} 
-        options={{ animation: 'shift',
-          tabBarIcon: ({ color }) => (
-            <Image source={require('./assets/icons/HomeIcone2.png')} style={{ tintColor:color, height:40, width:40, marginBottom:-20 }} /> 
-          )
-        }}
-      />
-      <NavBarNavigation.Screen 
-        name="ProjectNav" 
-        component={projectsView} 
-        options={{ animation: 'shift',
-          tabBarIcon: ({ color }) => ( 
-            <Image source={require('./assets/icons/Pen.png')} style={{ tintColor:color, height:30, width:30, marginBottom:-20 }} /> 
-          )
-        }}
-      />
-    </NavBarNavigation.Navigator>
-  );
-}
 
 
 
 export default function App() {
 
-  // Make Database Tables at launch
+  // Make Database Tables at launch ---------------------------
+  const [dbReady, setDbReady] = useState(false);
   useEffect(() => {
-    createTables();
+    createTables()
+      .then(() => setDbReady(true))
+      .catch(err => console.log("Erreur DB", err));
   }, []);
-  
-  return (
+
+  // User conected ? ------------------------------------------
+  const [userConnected, setUserConnected] = useState(false);
+  // function for checking
+  async function checkUserConnected() {
+    try {
+      const session = await EncryptedStorage.getItem('user_session');
+      setUserConnected(session === 'Flow_Connected');
+    } catch (err) {
+      console.log('Error checking session:', err);
+      setUserConnected(false);
+    }
+  }
+  // Initial check
+  useEffect(() => {
+    (async () => {
+      await checkUserConnected();
+    })();
+  }, []);
+  // Check periodically
+  useEffect(() => {
+    const interval = setInterval(() => {
+      checkUserConnected();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
+  // SCREENS ----------------------------------------------------
+  // User not connected --------------------
+  if (!userConnected && dbReady) {
+    console.log("User not connected")
+    return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <ClassicNavigation.Navigator>
-          <ClassicNavigation.Screen name="NavBar" component={NavBar} options={{ headerShown: false }}/>
-          <ClassicNavigation.Screen name="Projects" component={projectsView} options={{ headerShown: false }}/>
-          <ClassicNavigation.Screen name="Category" component={InProject} options={{ headerShown: false, animation: "slide_from_right" }}/>
-          <ClassicNavigation.Screen name="EditPost" component={EditPosts} options={{ headerShown: false, animation: "fade_from_bottom" }}/>
-        </ClassicNavigation.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <ClassicNavigation.Navigator>
+            <ClassicNavigation.Screen name="SignUp_Login" component={SignUpLogin} options={{ headerShown:false, animation:"fade" }}/>
+            <ClassicNavigation.Screen name="ValidEmail" component={ValidEmail} options={{ headerShown: false, animation: "slide_from_right" }}/>
+          </ClassicNavigation.Navigator>
+        </NavigationContainer>
     </GestureHandlerRootView>
-  );
+    );    
+  } 
+  
+  // Loading -----------------------------
+  else if (!dbReady && !userConnected) {
+    console.log("Loading")
+    return <LoadScreen/>;
+  } 
+  
+  // User Connected ----------------------
+  else if (userConnected && dbReady) {
+    console.log("App ready")
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <ClassicNavigation.Navigator>
+            <ClassicNavigation.Screen name="NavBar" component={NavBar} options={{ headerShown: false }}/>
+            {/* Edit Section */}
+            <ClassicNavigation.Screen name="InProject" component={InProject} options={{ headerShown: false, animation: "slide_from_right" }}/>
+            <ClassicNavigation.Screen name="EditPost" component={EditPosts} options={{ headerShown: false, animation: "fade_from_bottom" }}/>
+            {/* Read Section */}
+            <ClassicNavigation.Screen name="OnePostReading" component={OnePostReading} options={{ headerShown: false, presentation: "modal", animation: "fade_from_bottom" }}/>
+          </ClassicNavigation.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    );
+  };
 }
