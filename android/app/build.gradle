@@ -57,7 +57,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true // Pour nétoyer le code lors de la création d'un apk
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -72,20 +72,35 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+// Appliquer le plugin Google Services seulement si le fichier google-services.json est valide
+def googleServicesFile = file('google-services.json')
+def hasValidGoogleServices = googleServicesFile.exists() && googleServicesFile.text.contains('project_info')
+if (hasValidGoogleServices) {
+    apply plugin: 'com.google.gms.google-services'
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.flow_"
+    namespace "com.anonymous.flow_"
     defaultConfig {
-        applicationId "com.flow_"
+        applicationId "com.anonymous.flow_"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
     signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -103,7 +118,22 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            shrinkResources true // Supprime l'inutile lorsque c'est true
         }
+    }
+    // Ajouté par moi
+    splits {
+        abi {
+            reset()
+            enable true
+            universalApk false
+            include "arm64-v8a" // ATTENTION, ceci correspond au CPU de mon téléphone
+        }
+    }
+
+    // Ajouté par moi
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -111,6 +141,7 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-reanimated')
+    implementation ('com.google.android.gms:play-services-auth:21.1.1')  // version 2025
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
@@ -118,3 +149,5 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+

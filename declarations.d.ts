@@ -1,1 +1,7 @@
 declare module 'react-native-color-wheel';
+declare module '*.svg' {
+  import React from 'react';
+  import { SvgProps } from 'react-native-svg-transformer';
+  const content: React.FC<SvgProps>;
+  export default content;
+}

@@ -43,11 +43,12 @@
 -- Mettre une image .png en logo de l'app
     npx react-native set-icon --path ./assets/LogoApp/Image.png --platform android
 
-
+-- To find the SHA-1:
+    eas credentials --platform android
 
 -------------------------------------------------------------------------------------------------
 ----- Lunch the application ---------------------------------------------------------------------
--------------------------------------------------------------------------------------------------
+—————————————————————————————————————————————————————————————————————————————————————————————————
 
 -- To broke the Metro if it is runing:
     Kill -9 $(lsof -ti:8081)
@@ -58,6 +59,7 @@
 
 -- Lunch the Metro:
     npx react-native start
+    npx react-native start --reset-cache
 
 -- ADB:
     adb kill-server
@@ -66,12 +68,35 @@
 
 -- Play on Android deices (usb):
     npx react-native run-android
+    eas build --profile development --platform android --clear-cache
 
 -- For Visalisate the consol:
     adb logcat "*:S" ReactNativeJS:V
 
 -- After modify fontFamily:
     npx react-native-asset
+
+
+-- Make the apk for Android
+    Avant (pour que l'app n'ai pas besoin du Metro):
+        npx react-native bundle \
+        --platform android \
+        --dev false \
+        --entry-file index.js \
+        --bundle-output android/app/src/main/assets/index.android.bundle \
+        --assets-dest android/app/src/main/res/
+
+    mauvaise APK:
+        cd android
+        ./gradlew assembleDebug
+
+    création de la bonne APK:
+        cd android
+        ./gradlew assembleRelease
+
+
+    le fichier se trouvera ici:
+        android/app/build/outputs/apk/release/app-release.apk
 
 
 -------------------------------------------------------------------------------------------------

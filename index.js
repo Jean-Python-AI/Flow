@@ -1,6 +1,8 @@
 /**
  * @format
  */
+// React Native pur - pas de dépendance Expo
+
 import 'react-native-url-polyfill/auto';
 import 'react-native-gesture-handler';
 import { AppRegistry } from 'react-native';

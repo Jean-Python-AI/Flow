@@ -7,7 +7,7 @@ export const Colors = {
   Button: '#CFCFCF',
 
   Red: '#d10a00ff',
-  Red_transparent: '#d10a0016',
+  Red_transparent: '#d10a0030',
 
   ItemSecondary: '#969696',
   text: '#1a1a1aff',

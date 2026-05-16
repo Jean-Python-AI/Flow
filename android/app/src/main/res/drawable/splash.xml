@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Couleur de fond du splash -->
+    <item android:drawable="@color/splashscreen_background" />
+
+    <!-- Image OpenScreen centrée -->
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/openscreen" />
+    </item>
+</layer-list>

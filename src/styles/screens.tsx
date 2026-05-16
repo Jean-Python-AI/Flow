@@ -6,10 +6,12 @@ export const Screens = StyleSheet.create({
     basic : {
         backgroundColor: Colors.Background_Primary,
         flex:1,
+        paddingVertical:0,
+        paddingTop:25,
     },
     scroll : {
         flex: 1,
-        paddingTop: 20,
+        paddingTop: 0,
         paddingBottom: 80,
         paddingHorizontal: 20
     },
@@ -17,6 +19,8 @@ export const Screens = StyleSheet.create({
         backgroundColor: Colors.Background_Elements,
         flex:1,
         paddingHorizontal:10,
+        paddingVertical:0,
+        paddingTop:25,
     },
     editPost_TextZone : {
         backgroundColor: Colors.Background_Primary,
@@ -32,11 +36,14 @@ export const Screens = StyleSheet.create({
         flex:1,
         alignItems:'center',
         justifyContent:'center',
+        paddingVertical:0,
     },
     ScrollPosts: {
         borderRadius:20,
         backgroundColor:Colors.Background_Elements,
-        borderWidth:2,
-        borderColor:Colors.Background_Elements
+        padding:3
+    },
+    ReadSection: {
+        borderRadius: 20,
     }
 });

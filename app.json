@@ -1,4 +1,10 @@
 {
   "name": "Flow_",
-  "displayName": "Flow_"
+  "displayName": "Flow_",
+  "android": {
+    "package": "com.anonymous.flow_"
+  },
+  "ios": {
+    "bundleIdentifier": "com.anonymous.flow-"
+  }
 }

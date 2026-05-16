@@ -25,11 +25,14 @@ export const ViewsStyles = StyleSheet.create({
     SignUp_Container: {
         borderWidth: 2,
         borderColor: Colors.Button,
+        backgroundColor: Colors.Background_Elements,
         width: '80%',
         margin: 30,
         borderRadius: 20,
     },
     ErrorMessage: {
+        position: 'absolute',
+        bottom: 25,
         backgroundColor: Colors.Red_transparent,
         padding: 10,
         width: '70%',
@@ -44,5 +47,12 @@ export const ViewsStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         paddingVertical: 10
+    },
+    BottomBar: {
+        width: '100%',
+        paddingVertical: 15,
+        paddingHorizontal: 15,
+        flexDirection: 'row',
+        gap: 20
     }
 });

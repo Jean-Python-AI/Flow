@@ -7,7 +7,7 @@ export const ColorsLabels = {
   4:  '#ff8d7dff',
 
   // Orange
-  5:  '#FB8C00',
+  5:  '#fbb000ff',
   6:  '#F57C00',
   7:  '#EF6C00',
   8:  '#E65100',
@@ -19,24 +19,24 @@ export const ColorsLabels = {
   12: '#fff718ff',
 
   // Vert
-  13: '#66BB6A',
-  14: '#43A047',
-  15: '#2E7D32',
+  13: '#00d30bff',
+  14: '#009207ff',
+  15: '#005404ff',
   16: '#81C784',
 
   // Turquoise
-  17: '#75d1bbff',
-  18: '#4DB6AC',
-  19: '#1d8b80ff',
-  20: '#036c6aff',
+  17: '#00ce9eff',
+  18: '#00aa99ff',
+  19: '#127168ff',
+  20: '#0f514fff',
 
   // Bleu
-  21: '#64B5F6',
-  22: '#1E88E5',
-  23: '#1565C0',
-  24: '#0D47A1',
-  25: '#1976D2',
-  26: '#42A5F5',
+  21: '#65baffff',
+  22: '#1475cbff',
+  23: '#0057baff',
+  24: '#003585ff',
+  25: '#3081d3ff',
+  26: '#76c1ffff',
 
   // Bleu froid / Cyan
   27: '#82B1FF',
@@ -60,5 +60,9 @@ export const ColorsLabels = {
   39: '#A1887F',
   40: '#8D6E63',
   41: '#6D4C41',
-  42: '#48322cff',
+
+  // Gris / Noir / Blanc
+  43: '#9E9E9E',
+  44: '#616161',
+  46: '#000000ff',
 };

@@ -7,7 +7,7 @@ export const TextStyles = StyleSheet.create({
         width:'79%',
         backgroundColor:Colors.Background_Primary,
         borderRadius:10,
-        paddingHorizontal:10,
+        paddingLeft:15,
         paddingVertical:0,
         borderWidth:2,
         borderColor:Colors.Button,
@@ -16,15 +16,12 @@ export const TextStyles = StyleSheet.create({
     TextInputLogin: {
         width:'100%',
         backgroundColor:Colors.Background_Primary,
+        borderWidth:2,
+        borderColor:Colors.Button,
         borderRadius:10,
         paddingHorizontal:10,
         justifyContent:'center',
         height:44,
-    },
-
-    italic_light: {
-        fontFamily: 'Ubuntu-Italic',
-        color: Colors.ItemSecondary,
     },
     TitlePost: {
         fontSize: 18,
@@ -40,11 +37,6 @@ export const TextStyles = StyleSheet.create({
     TextWriting: {
         fontSize: 16,
         fontFamily: 'Ubuntu-Light'
-    },
-    subText: {
-        fontSize:16,
-        color: Colors.ItemSecondary,
-        fontFamily: 'Ubuntu-Medium'
     },
     MoreButton: {
         fontSize: 16,
