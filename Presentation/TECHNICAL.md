@@ -2,12 +2,10 @@
 
 ## Stack
 
-| Technologie | Rôle |
-|---|---|---|
-| React Native (sans Expo) |
-| TypeScript | Typage statique |
-| SQLite | Base de données locale |
-| Supabase | Backend utilisateurs |
+React Native (sans Expo)
+TypeScript
+SQLite
+Supabase (pour enregistrer les adresses des utilisateurs)
 
 ---
 
