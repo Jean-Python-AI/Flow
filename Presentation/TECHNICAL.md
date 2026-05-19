@@ -3,8 +3,11 @@
 ## Stack
 
 React Native (sans Expo)
+
 TypeScript
+
 SQLite
+
 Supabase (pour enregistrer les adresses des utilisateurs)
 
 ---
