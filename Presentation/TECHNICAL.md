@@ -22,7 +22,7 @@ et afficher les données.
 ---
 
 ## Organisation du code
-
+```
 src/
 ├── components/       # Composants réutilisables dans toute l'application
 ├── styles/           # Styles globaux partagés
@@ -39,7 +39,7 @@ src/
 │   └── Settings/ # Écran paramètres
 ├── Load/         # Écran de chargement initial
 └── StartingApp/  # Écrans affichés à la première ouverture
-
+```
 ---
 
 [Fonctionement de l'Algorithme](./ALGORITHME.md)
