@@ -28,4 +28,4 @@ Framework **React Native** avec TypeScript, sans Expo.
 Les notes sont enregistrées en local avec une base de données **SQLite**.  
 Les noms d'utilisateurs sont enregistrés via **Supabase** (fonctionnalité désactivée dans cette version publique).
 
-Pour plus de détails techniques → [Fonctionnement](./Presentation/TECHNICAL.md)
+Pour plus de détails techniques → [Fonctionement](./Presentation/TECHNICAL.md)
