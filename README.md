@@ -13,6 +13,8 @@ Je me retrouvais avec des notes oubliées que je ne relisais jamais.
 
 J'ai également créé cette application pour apprendre React Native, car c'est le premier projet que j'ai réalisé avec ce framework.
 
+Pour l'installer et le modifier → [instalation](./Presentation/INSTALLATION.md)
+
 ## Fonctionnalités
 
 Dans l'application, vous pouvez :
