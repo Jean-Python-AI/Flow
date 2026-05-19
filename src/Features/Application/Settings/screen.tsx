@@ -7,7 +7,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import BottomBar from './components/BottomBar';
 import LogOut from '../../../../assets/icons/LogOut.svg';
 import LogOutPopIn from './components/PopIn/Logout';
-import PostsPopIn from './components/PopIn/PostsInfos';
 // Styles ---------------------------------------
 import { Screens } from '../../../styles/screens';
 import { Colors } from '../../../styles/theme';
@@ -82,7 +81,6 @@ function SettingGlobal() {
 
   // PopIn
   const [logOutPopInVisible, setLogOutPopInVisible] = useState(false);
-  const [PostsPopInVisible, setPostsPopInVisible] = useState(false);
 
   // ──────────────────────── CONFIGURER LA STATUSBAR QUAND L'ÉCRAN EST FOCUS ────────────────────────
   useFocusEffect(
@@ -114,8 +112,8 @@ function SettingGlobal() {
       <ScrollView style={{ flex: 1, width: '100%' }}>
 
         <View style={{width:'100%', alignItems:'center'}}>
-          <Pressable
-            style={({ pressed }) => ({
+          <View
+            style={{
               width: '90%',
               height: 350,
               justifyContent: 'center',
@@ -126,8 +124,7 @@ function SettingGlobal() {
               borderWidth: 2,
               borderBottomWidth: 2,
               borderColor: Colors.Background_Elements,
-            })}
-            onPress={() => setPostsPopInVisible(true)}
+            }}
           >
             <Text style={[TextStyles.Title, { fontSize: 50, zIndex: 1 }]}>
               {numberPosts}
@@ -165,7 +162,7 @@ function SettingGlobal() {
                 />
               ))}
             </View>
-          </Pressable>
+          </View>
         </View>
 
         <View style={{ flex:1, width:'100%', alignItems:'center', gap:20, paddingVertical:70}}>
@@ -189,7 +186,6 @@ function SettingGlobal() {
 
       {/* PopIn LogOut */}
       <LogOutPopIn visible={logOutPopInVisible} onClose={() => setLogOutPopInVisible(false)}/>
-      <PostsPopIn visible={PostsPopInVisible} onClose={() => setPostsPopInVisible(false)} numberPosts={numberPosts}/>
     </View>
   );
 }

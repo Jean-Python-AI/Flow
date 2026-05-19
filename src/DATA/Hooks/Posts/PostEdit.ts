@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { Post } from '../../types/Post';
 import { insertPost, updatePost, deletePost } from '../../DataBase/postsRepository';
 import { useTableS } from '../Algorithme/TableS';
 

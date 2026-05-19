@@ -1,156 +1,29 @@
 # Flow_
 
-Flow_ est une application de prise de note pensée pour la relecture des notes.
-Tu écrit et tu relis.
+Flow_ est une application de prise de notes pensée pour la relecture.  
+Vous écrivez, vous relisez.  
+Chaque note se transforme en un post relisable, comme dans le feed d'un réseau social.
 
-Par la suite, l'objectif est de permettre de collecter des postes provenant d'autre réseaux sociaux pour les relir dans Flow_
+![screenshot](./Presentation/App_Screenshot.jpeg)
 
+## Pourquoi avoir créé Flow_ ?
 
-### 1. Stack Technique
+J'ai créé ce projet pour répondre à un problème que je ressentais avec les applications de prise de notes classiques : elles ne font que stocker l'information.  
+Je me retrouvais avec des notes oubliées que je ne relisais jamais.
 
-- React Native v[version] [typescript ou pas : tsx] [sans expo]
-- Backend: Supabase
+J'ai également créé cette application pour apprendre React Native, car c'est le premier projet que j'ai réalisé avec ce framework.
 
+## Fonctionnalités
 
-### 2. Organisation du code
+Dans l'application, vous pouvez :
+- Prendre des notes, les modifier, les supprimer
+- Lier des notes à des catégories
+- Les relire dans un feed
 
-```md
-.
-├── src/
-│   ├── components/
-|   |   |   # les composants utilisé dans toute l'application
-│   │   └── LabelsBuble.tsx
-|   |
-│   ├── DATA/
-│   │   ├── Database
-|   |   |   ├── dataBase.ts
-|   |   |   ├── labelsRepository.ts
-|   |   |   └── postsRepository.ts
-|   |   ├── Hooks
-|   |   |   ├── Labels.ts
-|   |   |   ├── LabelEdit.ts
-|   |   |   ├── Post.ts
-|   |   |   └── ...
-|   |   ├── Services
-|   |   |   |   # Là où est actuelement le fichier algorithme
-|   |   ├── types
-|   |   |   |   # definition des types pour les variable Label et Post
-|   |
-│   ├── Features/
-|   |   ├── Application
-|   │   │   ├── Editing/
-|   |   |   |   |   # Tous se qui concerne le screen Editing
-|   |   |   |   ├── Components/
-|   |   |   |   |   |   # Components strictement utilisé pour cette feature uniquement
-|   |   |   |   |   ├── PopIn/
-|   |   |   |   |   └── components...
-|   |   |   |   └── screen.tsx
-|   │   │   ├── Reading/
-|   |   |   |   |   # Tous se qui concerne le screen Reading
-|   |   |   |   ├── Components/
-|   |   |   |   |   ├── PopIn/
-|   |   |   |   |   ├── Posts/
-|   |   |   |   |   └── components...
-|   |   |   |   ├── Variables/
-|   |   |   |   └── screen.tsx
-|   │   │   ├── Settings/
-|   |   |   |   |   # Tous se qui concerne le screen Settings
-|   |   |   |   ├── Components/
-|   |   |   |   |   ├── PopIn/
-|   |   |   |   |   └── components...
-|   |   |   |   └── screen.tsx
-|   |   ├── Load/
-|   |   |   |   # Le screen de chargement
-|   |   |   └── screen.tsx
-│   │   └── StartingApp/
-|   |   |   |   # Les screens qui s'affiche lors de la première ouverture
-|   |   |   └── FirstOpen.tsx
-|   |
-│   ├── styles/
-│   │   |   # Tous les styles
-│   |   ├── Button.tsx
-│   |   ├── PopIn.tsx
-│   │   └── ...
-|   |
-│   └── utils/
-│       └── StatusBarNative.ts
-|
-└── App.tsx
-```
+## Stack technique
 
+Framework **React Native** avec TypeScript, sans Expo.  
+Les notes sont enregistrées en local avec une base de données **SQLite**.  
+Les noms d'utilisateurs sont enregistrés via **Supabase** (fonctionnalité désactivée dans cette version publique).
 
-```md
-.
-├── src/
-│   ├── components/
-|   |   ├── UI/
-|   |   |   |   # Tous les style de l'UI
-|   |   |   ├── Button.tsx
-|   |   |   ├── PopIn.tsx
-|   |   |   └── ...
-|   |   |   # les composants utilisé dans toute l'application
-|   |   ├── PopIn.tsx
-│   │   └── LabelsBuble.tsx
-|   |
-│   ├── DataBase/
-│   │   ├── Label/
-|   |   |   |   # Tous se qui concerne la gestion des Labels dans la Database
-|   |   |   ├── addLabel.ts
-|   |   |   ├── modifyLabels.ts
-|   |   |   ├── ReadLabel.ts
-|   |   |   └── DeleteLabel.ts
-|   |   ├── Posts/
-|   |   |   |   # Tous se qui concerne la gestion des Posts dans la Database
-|   |   |   └── ...
-│   │   └── User/
-|   |   |   |   # Tous se qui concerne la connection
-|   |   |   └── ...
-|   |
-│   ├── Features/
-│   │   ├── App/
-|   │   │   ├── Editing/
-|   |   |   |   |   # Tous se qui concerne le screen Editing
-|   |   |   |   ├── Components/
-|   |   |   |   |   |   # Components strictement utilisé pour cette feature uniquement
-|   |   |   |   |   ├── PopIn/
-|   |   |   |   |   └── components...
-|   |   |   |   └── screen.tsx
-|   │   │   ├── Reading/
-|   |   |   |   |   # Tous se qui concerne le screen Reading
-|   |   |   |   ├── Components/
-|   |   |   |   |   ├── PopIn/
-|   |   |   |   |   ├── Posts/
-|   |   |   |   |   └── components...
-|   |   |   |   ├── Variables/
-|   |   |   |   └── screen.tsx
-|   │   │   ├── Settings/
-|   |   |   |   |   # Tous se qui concerne le screen Settings
-|   |   |   |   ├── Components/
-|   |   |   |   |   ├── PopIn/
-|   |   |   |   |   └── components...
-|   |   |   |   └── screen.tsx
-|   |   └── Auth/
-|   |   |   |   # Les screens pour la connection par Email
-|   |   |   ├── SignUp/
-|   |   |   ├── Login.tsx
-|   |   |   └── screen.tsx
-|   |   ├── Load/
-|   |   |   |   # Le screen de chargement
-|   |   |   └── screen.tsx
-│   │   └── StartingApp/
-|   |   |   |   # Les screens qui s'affiche lors de la première ouverture
-|   |   |   ├── OnboardingScreens/
-|   |   |   ├── FirstOpen.tsx
-|   |   |   └── Onboarding.tsx
-|   |
-│   ├── styles/
-│   │   |   # Tous les styles
-|   |   ├── theme.tsx
-|   |   ├── screens.tsx
-│   │   └── ...
-|   |
-│   └── utils/
-│       └── StatusBarNative.ts
-|
-└── App.tsx
-```
+Pour plus de détails techniques → [Fonctionnement](./Presentation/TECHNICAL.md)

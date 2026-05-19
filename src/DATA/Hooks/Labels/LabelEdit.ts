@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { Label } from '../../types/Label';
 import { insertLabel, addLinkPostLabel, updateLabel, deleteLinkPostLabel, deleteLabel } from '../../DataBase/labelsRepository';
 
 // Hook to read labels informations

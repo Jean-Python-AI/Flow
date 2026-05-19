@@ -315,16 +315,16 @@ export default function App() {
     // Callback pour le layout, sans dépendance à Expo
   }, []);
 
-  // ──────────────────────── SI PAS PRÊT → LoadScreen PLEIN ÉCRAN ────────────────────────
+  // ──────────────────────── SI PAS PRÊT ────────────────────────
   if (!appIsReady) {
     return (
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-        <LoadScreen /> {/* ← TON ÉCRAN DE CHARGEMENT ANIMÉ PENDANT TOUT LE CHARGEMENT */}
+        <LoadScreen />
       </View>
     );
   }
 
-  // ──────────────────────── APP PRÊTE → ON AFFICHE LA NAVIGATION ────────────────────────
+  // ──────────────────────── APP PRÊTE  ────────────────────────
   // Protection : si userConnected est null ou firstOpen est vide, afficher l'écran de connexion par défaut
   // On affiche l'app seulement si userConnected est explicitement true
   const isUserConnected = userConnected === true;

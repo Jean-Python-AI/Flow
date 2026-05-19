@@ -10,8 +10,8 @@ import { TextStyles } from '../../styles/Text';
 // Import Database --------------------------
 import { ButtonStyles } from '../../Components/UI/Button';
 import { signInWithGoogle } from '../../DATA/Services/Connection/GoogleOAuth';
+import { logInUser } from '../../DATA/Services/Connection/Connect';
 // components -------------------------------
-import Back from '../../../assets/icons/Back.svg';
 import GoogleIcon from '../../../assets/icons/Google.svg';
 
 
@@ -74,28 +74,38 @@ export default function FisrtOpenScreen() {
                     <Text style={[TextStyles.Title, {textAlign:'center', fontSize:30 }]}>Less noise.{'\n'}More thinking.</Text>
                 </View>
 
-                {/* Google Connection */}
-                <Pressable
-                    onPress={async ()=> {
-                    try {
-                        setLoading(true);
-                        await signInWithGoogle();     // Met à jour le stockage local (user_session)
-                        await refreshUserConnection(); // Lit user_session et met à jour userConnected dans App.tsx
-                    } finally {
-                        setLoading(false);
-                    }
-                    }}
-                    style={({pressed})=>([ButtonStyles.connectionWithGoogle, {backgroundColor: pressed?Colors.Button:Colors.Background_Elements}])}
-                >
-                    {loading ? (
-                        <Text style={[TextStyles.TextPost, {color:Colors.ItemSecondary}]}>Loading...</Text>
-                    ) : (
-                        <>
-                            <GoogleIcon width={24} height={24} color={Colors.ItemSecondary}/>
-                            <Text style={[TextStyles.TextPost, {fontSize:20}]}>Google</Text>
-                        </>
-                    )}
-                </Pressable>
+                <View style={{width:'100%', flexDirection:'column', alignItems:'center', paddingBottom:30, gap:5}}>
+                    {/* Google Connection */}
+                    <Pressable
+                        onPress={async ()=> {
+                        try {
+                            setLoading(true);
+                            await signInWithGoogle();     // Met à jour le stockage local (user_session)
+                            await refreshUserConnection(); // Lit user_session et met à jour userConnected dans App.tsx
+                        } finally {
+                            setLoading(false);
+                        }
+                        }}
+                        style={({pressed})=>([ButtonStyles.connectionWithGoogle, {backgroundColor: pressed?Colors.Button:Colors.Background_Elements}])}
+                    >
+                        {loading ? (
+                            <Text style={[TextStyles.TextPost, {color:Colors.ItemSecondary}]}>Loading...</Text>
+                        ) : (
+                            <>
+                                <GoogleIcon width={24} height={24} color={Colors.ItemSecondary}/>
+                                <Text style={[TextStyles.TextPost, {fontSize:20}]}>Google</Text>
+                            </>
+                        )}
+                    </Pressable>
+
+                    {/* Passer la connection au cas ou le backend est indisponible, Uniquement pour le dévloppement */}
+                    <Pressable
+                        onPress={() => {logInUser(); console.log('Tentative de connection')}}
+                        style={({pressed})=>({})}
+                    >
+                        <Text style={[TextStyles.TextPost]}>Passer</Text>
+                    </Pressable>
+                </View>
             </View>
         </View>
     )

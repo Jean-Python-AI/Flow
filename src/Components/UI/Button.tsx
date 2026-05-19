@@ -100,7 +100,6 @@ export const ButtonStyles = StyleSheet.create({
         borderColor:Colors.ItemSecondary,
         alignItems:'center',
         justifyContent:'center',
-        marginBottom:30,
         marginTop:10,
         flexDirection:'row',
         gap:10
