@@ -20,7 +20,7 @@ Pour l'installer et le modifier → [installation](./Presentation/INSTALLATION.m
 Dans l'application, vous pouvez :
 - Prendre des notes, les modifier, les supprimer
 - Lier des notes à des catégories
-- Les relire dans un feed
+- Les relire dans un feed grâce à un [algorithme](./Presentation/ALGORITHME.md)
 
 ## Stack technique
 
